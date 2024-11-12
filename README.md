@@ -6,17 +6,17 @@ Which restaurant is opened now?
 MySQL on docker for testing
 
 1. Create MySQL dokcer
-'''
+```
 docker run -d -p 3306:3306 -v /tmp/mysql:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=admin mysql
-'''
+```
 
 2. Access SQL
-'''
+```
 mysql -h 192.168.1.221 -P 3306 -u root -p
-'''
+```
 
 3. Create Database, Table
-'''
+```
 create database restaurant;
 use restaurant;
 CREATE TABLE restaurant_info (
@@ -28,10 +28,10 @@ CREATE TABLE restaurant_info (
     address VARCHAR(255) NOT NULL,
     PRIMARY KEY (name)
 );
-'''
+```
 
 4. Verify table exists
-'''
+```
 show tables;
 +----------------------+
 | Tables_in_restaurant |
@@ -50,10 +50,10 @@ desc restaurant_info;
 | close_hour | time         | NO   |     | NULL    |       |
 | address    | varchar(255) | NO   |     | NULL    |       |
 +------------+--------------+------+-----+---------+-------+
-'''
+```
 
 5. Add entires to table
-'''
+```
 INSERT INTO restaurant_info (name, style, vegetarian, open_hour, close_hour, address) VALUES
     ('Pizza Hut', 'Italian', FALSE, '09:00:00', '23:00:00', '123 Main St, New York, NY'),
     ('La Parisienne', 'French', TRUE, '08:00:00', '22:00:00', '45 Rue de Paris, Los Angeles, CA'),
@@ -73,5 +73,4 @@ select * from restaurant_info;
 | Sushi World    | Japanese |          0 | 11:00:00  | 21:00:00   | 789 Sakura Blvd, San Francisco, CA |
 | Veggie Delight | Italian  |          1 | 10:00:00  | 18:00:00   | 202 Veggie St, Miami, FL           |
 +----------------+----------+------------+-----------+------------+------------------------------------+  
-
-'''
+```
