@@ -20,7 +20,22 @@ pipeline {
                 echo "Vegetarian Option: ${params.VEGETARIAN}"
             }
         }
-
+        
+        stage('Download jq if needed') {
+            steps {
+                script {
+                    // Download jq locally if it's not already downloaded
+                    sh """
+                        if ! [ -x "\$(command -v jq)" ]; then
+                            echo 'jq not found, downloading...'
+                            curl -L -o jq https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64
+                            chmod +x jq
+                        fi
+                    """
+                }
+            }
+        }   
+        
         stage('Trigger Recommendations') {
             steps {
                 script {
