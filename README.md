@@ -98,3 +98,6 @@ Then create first admin user/password to access Jenkins UI
    b. Update/Add/Remove MySQL restaurant_info table  
    c. Create function(+python code), MySQL with Terraform in Azure cloud.  
 
+Following is an example for (a), (b)
+![Jenkins-Jobs](https://github.com/user-attachments/assets/0ed77cde-b43c-485c-a96b-54c5f5efdcc5)
+
