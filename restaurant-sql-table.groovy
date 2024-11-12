@@ -2,7 +2,14 @@ pipeline {
     agent any
 
     parameters {
-        choice(name: 'ACTION', choices: ['ADD', 'UPDATE', 'REMOVE'], description: 'Choose an ACTION method to interact with the restaurant SQL table')
+        choice(
+            name: 'ACTION',
+            choices: ['ADD', 'UPDATE', 'REMOVE'],
+            description: '''Choose an ACTION method to interact with the restaurant SQL table.
+            - For ADD, fill all the fields.
+            - For UPDATE, just fill the NAME, OPEN_HOUR, and CLOSE_HOUR fields.
+            - For REMOVE, just fill the NAME field.'''
+        )
         string(name: 'API_URL', defaultValue: 'http://192.168.1.221:5000/restaurant', description: 'Enter the API endpoint URL')
         string(name: 'NAME', defaultValue: '', description: 'Name of the restaurant')
         choice(name: 'STYLE', choices: ['Italian', 'French', 'Japanese', 'Korean', 'American', 'Asian'], description: 'Style of the restaurant (only for ADD)')
