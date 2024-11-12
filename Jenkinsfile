@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     parameters {
-        string(name: 'IP_ADDRESS', defaultValue: '127.0.0.1', description: 'Enter the API server IP address')
+        string(name: 'IP_ADDRESS', defaultValue: '192.168.1.221', description: 'Enter the API server IP address')
         choice(name: 'STYLE', choices: ['Italian', 'French', 'Korean', 'American'], description: 'Choose a style')
         choice(name: 'VEGETARIAN', choices: ['yes', 'no'], description: 'Vegetarian option')
     }
@@ -31,7 +31,7 @@ pipeline {
                     sh """
                         curl -X GET "${apiUrl}" \
                              -H "Content-Type: application/json" \
-                             -d '{\"style\": \"${params.STYLE}\", \"vegetarian\": \"${params.VEGETARIAN}\"}'
+                             -d '{\"style\": \"${params.STYLE}\", \"vegetarian\": \"${params.VEGETARIAN}\"}' | jq '.[]'
                     """
                 }
             }
