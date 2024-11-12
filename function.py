@@ -25,8 +25,8 @@ def get_recommendations(style, vegetarian):
 
     # SQL query to retrieve restaurant details based on style and vegetarian options
     query = """
-        SELECT name, style, vegetarian, open_hour, close_hour
-        FROM restaurant_info
+        SELECT name, style, vegetarian, open_hour, close_hour, address
+        FROM restaurants_info
         WHERE style = %s AND vegetarian = %s
     """
     cursor.execute(query, (style, vegetarian))
@@ -52,7 +52,8 @@ def get_recommendations(style, vegetarian):
                 "style": result['style'],
                 "vegetarian": result['vegetarian'],
                 "openHour": str(open_time),
-                "closeHour": str(close_time)
+                "closeHour": str(close_time),
+                "address": result['address']
             })
 
     if recommendations:
@@ -108,7 +109,7 @@ def add_restaurant():
             database='restaurants'
         )
         with connection.cursor() as cursor:
-            query = """INSERT INTO restaurant_info (name, style, vegetarian, open_hour, close_hour) 
+            query = """INSERT INTO restaurants_info (name, style, vegetarian, open_hour, close_hour) 
                        VALUES (%s, %s, %s, %s, %s)"""
             cursor.execute(query, (name, style, vegetarian, open_hour, close_hour))
             connection.commit()
@@ -131,7 +132,7 @@ def delete_restaurant():
             database='restaurants'
         )
         with connection.cursor() as cursor:
-            query = """DELETE FROM restaurant_info WHERE name = %s"""
+            query = """DELETE FROM restaurants_info WHERE name = %s"""
             cursor.execute(query, (name,))
             connection.commit()
         return jsonify({"message": "Restaurant deleted successfully"}), 200
@@ -155,7 +156,7 @@ def update_restaurant():
             database='restaurants'
         )
         with connection.cursor() as cursor:
-            query = """UPDATE restaurant_info 
+            query = """UPDATE restaurants_info 
                        SET open_hour = %s, close_hour = %s 
                        WHERE name = %s"""
             cursor.execute(query, (open_hour, close_hour, name))
