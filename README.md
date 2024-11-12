@@ -18,7 +18,7 @@ mysql -h 192.168.1.221 -P 3306 -u root -p
 3. Create Database, Table
 ```
 create database restaurants;
-use restaurant;
+use restaurants;
 CREATE TABLE restaurants_info (
     name VARCHAR(255) NOT NULL,
     style VARCHAR(50) NOT NULL,
@@ -34,12 +34,12 @@ CREATE TABLE restaurants_info (
 ```
 show tables;
 +----------------------+
-| Tables_in_restaurant |
+| Tables_in_restaurants |
 +----------------------+
-| restaurant_info      |
+| restaurants_info      |
 +----------------------+  
    
-desc restaurant_info;
+desc restaurants_info;
 +------------+--------------+------+-----+---------+-------+
 | Field      | Type         | Null | Key | Default | Extra |
 +------------+--------------+------+-----+---------+-------+
