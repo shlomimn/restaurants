@@ -93,8 +93,8 @@ This password is required before suggested installation.
 
 Then create first admin user/password to access Jenkins UI
 
-2. Create Jobs based on Jenkins files in git repo.
-   a. Query MySQL
-   b. Update/Add/Remove MySQL restaurant_info table
-   c. Create function(+python code), MySQL with Terraform in Azure cloud.
+2. Create Jobs based on Jenkins files in git repo.  
+   a. Query MySQL  
+   b. Update/Add/Remove MySQL restaurant_info table  
+   c. Create function(+python code), MySQL with Terraform in Azure cloud.  
 
