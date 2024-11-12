@@ -17,9 +17,9 @@ mysql -h 192.168.1.221 -P 3306 -u root -p
 
 3. Create Database, Table
 ```
-create database restaurant;
+create database restaurants;
 use restaurant;
-CREATE TABLE restaurant_info (
+CREATE TABLE restaurants_info (
     name VARCHAR(255) NOT NULL,
     style VARCHAR(50) NOT NULL,
     vegetarian TINYINT(1) NOT NULL,
@@ -54,7 +54,7 @@ desc restaurant_info;
 
 5. Add entires to table
 ```
-INSERT INTO restaurant_info (name, style, vegetarian, open_hour, close_hour, address) VALUES
+INSERT INTO restaurants_info (name, style, vegetarian, open_hour, close_hour, address) VALUES
     ('Pizza Hut', 'Italian', FALSE, '09:00:00', '23:00:00', '123 Main St, New York, NY'),
     ('La Parisienne', 'French', TRUE, '08:00:00', '22:00:00', '45 Rue de Paris, Los Angeles, CA'),
     ('Sushi World', 'Japanese', FALSE, '11:00:00', '21:00:00', '789 Sakura Blvd, San Francisco, CA'),
@@ -62,7 +62,7 @@ INSERT INTO restaurant_info (name, style, vegetarian, open_hour, close_hour, add
     ('Veggie Delight', 'Italian', TRUE, '10:00:00', '18:00:00', '202 Veggie St, Miami, FL'),
     ('French Feast', 'French', FALSE, '12:00:00', '22:00:00', '303 Feast Ave, Austin, TX');  
 
-select * from restaurant_info;
+select * from restaurants_info;
 +----------------+----------+------------+-----------+------------+------------------------------------+
 | name           | style    | vegetarian | open_hour | close_hour | address                            |
 +----------------+----------+------------+-----------+------------+------------------------------------+
