@@ -4,7 +4,7 @@ pipeline {
     parameters {
         string(name: 'IP_ADDRESS', defaultValue: '192.168.1.221', description: 'Enter the API server IP address')
         choice(name: 'STYLE', choices: ['Italian', 'French', 'Korean', 'American'], description: 'Choose a style')
-        choice(name: 'VEGETARIAN', choices: ['yes', 'no'], description: 'Vegetarian option')
+        choice(name: 'VEGETARIAN', choices: ['true', 'false'], description: 'Vegetarian option')
     }
 
     environment {
