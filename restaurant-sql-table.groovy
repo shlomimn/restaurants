@@ -5,7 +5,7 @@ pipeline {
         choice(name: 'ACTION', choices: ['ADD', 'UPDATE', 'REMOVE'], description: 'Choose an ACTION method to interact with the restaurant SQL table')
         string(name: 'API_URL', defaultValue: 'http://192.168.1.221:5000/restaurant', description: 'Enter the API endpoint URL')
         string(name: 'NAME', defaultValue: '', description: 'Name of the restaurant')
-        string(name: 'STYLE', defaultValue: '', description: 'Style of the restaurant (only for ADD)')
+        choice(name: 'STYLE', choices: ['Italian', 'French', 'Japanese', 'Korean', 'American', 'Asian'], description: 'Style of the restaurant (only for ADD)')
         choice(name: 'VEGETARIAN', choices: ['yes', 'no'], description: 'Vegetarian option (only for ADD)')
         string(name: 'OPEN_HOUR', defaultValue: '', description: 'Opening hour (for ADD and UPDATE)')
         string(name: 'CLOSE_HOUR', defaultValue: '', description: 'Closing hour (for ADD and UPDATE)')
@@ -15,7 +15,7 @@ pipeline {
         stage('Prepare Parameters') {
             steps {
                 script {
-                    def jsonData = ''
+                    jsonData = ''
                     if (params.ACTION == 'ADD') {
                         jsonData = """{
                             "name": "${params.NAME}",
@@ -46,8 +46,18 @@ pipeline {
         stage('Send API Request') {
             steps {
                 script {
+                    // Define a map to convert ACTION to HTTP method
+                    def httpMethods = [
+                        'ADD'    : 'POST',
+                        'UPDATE' : 'PUT',
+                        'REMOVE' : 'DELETE'
+                    ]
+
+                    // Get the appropriate HTTP method based on the ACTION
+                    def httpMethod = httpMethods[params.ACTION]
+
                     sh """
-                        curl -X ${params.ACTION} ${params.API_URL} \
+                        curl -X ${httpMethod} ${params.API_URL} \
                              -H "Content-Type: application/json" \
                              -d '${jsonData}'
                     """
