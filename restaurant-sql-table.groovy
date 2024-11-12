@@ -16,11 +16,12 @@ pipeline {
             steps {
                 script {
                     jsonData = ''
+                    def vegetarianValue = (params.VEGETARIAN == 'true') ? 1 : 0
                     if (params.ACTION == 'ADD') {
                         jsonData = """{
                             "name": "${params.NAME}",
                             "style": "${params.STYLE}",
-                            "vegetarian": "${params.VEGETARIAN}",
+                            "vegetarian": ${vegetarianValue},
                             "open_hour": "${params.OPEN_HOUR}",
                             "close_hour": "${params.CLOSE_HOUR}"
                         }"""
