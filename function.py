@@ -97,6 +97,7 @@ def add_restaurant():
     vegetarian = data.get('vegetarian')
     open_hour = data.get('open_hour')
     close_hour = data.get('close_hour')
+    address = data.get('address')
 
     try:
         connection = pymysql.connect(
@@ -106,9 +107,9 @@ def add_restaurant():
             database='restaurants'
         )
         with connection.cursor() as cursor:
-            query = """INSERT INTO restaurants_info (name, style, vegetarian, open_hour, close_hour) 
-                       VALUES (%s, %s, %s, %s, %s)"""
-            cursor.execute(query, (name, style, vegetarian, open_hour, close_hour))
+            query = """INSERT INTO restaurants_info (name, style, vegetarian, open_hour, close_hour, address) 
+                       VALUES (%s, %s, %s, %s, %s, %s)"""
+            cursor.execute(query, (name, style, vegetarian, open_hour, close_hour, address))
             connection.commit()
         return jsonify({"message": "Restaurant added successfully"}), 201
     except Exception as e:
