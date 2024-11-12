@@ -1,7 +1,4 @@
-from inspect import trace
-
 from flask import Flask, request, jsonify
-import mysql.connector
 from datetime import datetime, timedelta
 import pymysql
 
