@@ -6,7 +6,7 @@ pipeline {
         string(name: 'API_URL', defaultValue: 'http://192.168.1.221:5000/restaurant', description: 'Enter the API endpoint URL')
         string(name: 'NAME', defaultValue: '', description: 'Name of the restaurant')
         choice(name: 'STYLE', choices: ['Italian', 'French', 'Japanese', 'Korean', 'American', 'Asian'], description: 'Style of the restaurant (only for ADD)')
-        choice(name: 'VEGETARIAN', choices: ['yes', 'no'], description: 'Vegetarian option (only for ADD)')
+        choice(name: 'VEGETARIAN', choices: ['true', 'false'], description: 'Vegetarian option (only for ADD)')
         string(name: 'OPEN_HOUR', defaultValue: '', description: 'Opening hour (for ADD and UPDATE)')
         string(name: 'CLOSE_HOUR', defaultValue: '', description: 'Closing hour (for ADD and UPDATE)')
     }
