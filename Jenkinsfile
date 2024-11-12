@@ -26,7 +26,7 @@ pipeline {
                 script {
                     // Download jq locally if it's not already downloaded
                     sh """
-                        if ! [ -x "\$(command -v jq)" ]; then
+                        if ! [ -x "./jq" ]; then
                             echo 'jq not found, downloading...'
                             curl -L -o jq https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64
                             chmod +x jq
@@ -34,19 +34,19 @@ pipeline {
                     """
                 }
             }
-        }   
-        
+        }
+
         stage('Trigger Recommendations') {
             steps {
                 script {
                     def apiUrl = "http://${params.IP_ADDRESS}:${env.PORT}${env.ENDPOINT}"
                     echo "Sending request to API URL: ${apiUrl} with style: ${params.STYLE} and vegetarian: ${params.VEGETARIAN}"
 
-                    // Send the curl request with selected parameters
+                    // Send the curl request with selected parameters and format the result with jq
                     sh """
                         curl -X GET "${apiUrl}" \
                              -H "Content-Type: application/json" \
-                             -d '{\"style\": \"${params.STYLE}\", \"vegetarian\": \"${params.VEGETARIAN}\"}' | jq '.[]'
+                             -d '{\"style\": \"${params.STYLE}\", \"vegetarian\": \"${params.VEGETARIAN}\"}' | ./jq '.[]'
                     """
                 }
             }
