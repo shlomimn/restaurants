@@ -101,3 +101,9 @@ Then create first admin user/password to access Jenkins UI
 Following is an example for (a), (b)
 ![Jenkins-Jobs](https://github.com/user-attachments/assets/0ed77cde-b43c-485c-a96b-54c5f5efdcc5)
 
+Jenkins - Restaurant-Query job:
+![Jenkins-Restaurants-Query](https://github.com/user-attachments/assets/b53ea74a-96b8-431f-b418-48cea8f6137a)
+
+Jenkins - Restaurant-SQL-Table job:
+![Jenkins-Restaurants-SQL-Table](https://github.com/user-attachments/assets/08b73393-b7bc-47a0-957b-26ba5cc3fb81)
+
