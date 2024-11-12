@@ -74,3 +74,27 @@ select * from restaurant_info;
 | Veggie Delight | Italian  |          1 | 10:00:00  | 18:00:00   | 202 Veggie St, Miami, FL           |
 +----------------+----------+------------+-----------+------------+------------------------------------+  
 ```
+
+Jenkins on Docker for testing
+
+1. Create Jenkins docker
+```
+docker run  -d -p 8080:8080 -p 50000:50000 --restart=on-failure -v /tmp/jenkins:/var/jenkins_home jenkins/jenkins:lts-jdk17
+```
+
+When entering http://127.0.0.1:8080/
+get Administrator's Jenkins password from docker
+```
+docker exec -it 89 bash
+jenkins@89f0b24efa52:/$ cat /var/jenkins_home/secrets/initialAdminPassword
+```
+
+This password is required before suggested installation.
+
+Then create first admin user/password to access Jenkins UI
+
+2. Create Jobs based on Jenkins files in git repo.
+   a. Query MySQL
+   b. Update/Add/Remove MySQL restaurant_info table
+   c. Create function(+python code), MySQL with Terraform in Azure cloud.
+
