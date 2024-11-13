@@ -1,37 +1,35 @@
+
+HashMap endpoint = [
+    "azure-function": "/api/recommend"
+    "flask": "/recommend"
+]
+
+HashMap ipaddress = [
+    "azure-function": "localhost"
+    "flask": "192.168.1.221"
+]
+
+HashMap port = [
+    "azure-function": "7071"
+    "flask": "5000"
+]
+
 pipeline {
     agent any
 
     parameters {
         choice(name: 'API_TYPE', choices: ['azure-function', 'flask'], description: 'Choose the API type')
-        string(name: 'IP_ADDRESS', defaultValue: '192.168.1.221', description: 'Enter the API server IP address')
         choice(name: 'STYLE', choices: ['Italian', 'French', 'Japanese', 'Korean', 'American', 'Asian'], description: 'Choose a style')
         choice(name: 'VEGETARIAN', choices: ['yes', 'no'], description: 'Vegetarian option')
     }
-
-    environment {
-    }
-
-    def config = [:]
-    config['ENDPOINT'] = '/recommend'
 
     stages {
         stage('Load Parameters') {
             steps {
                 script {
-                    if (params.API_TYPE == 'flask') {
-                        env.PORT = '5000'
-                    } else if (params.API_TYPE == 'azure-function') {
-                        env.PORT = '7071'
-                        config['ENDPOINT'] = '/api/recommend'
-                    }
-                    script {
-                        env.IP_ADDRESS = params.API_TYPE == 'azure-function' ? 'localhost' : params.IP_ADDRESS
-                        echo "Selected IP Address: ${env.IP_ADDRESS}"
-                    }
                     echo "Selected Style: ${params.STYLE}"
                     echo "Vegetarian Option: ${params.VEGETARIAN}"
                     echo "API Type: ${params.API_TYPE}"
-                    echo "Using Port: ${env.PORT}"
                 }
             }
         }
@@ -54,7 +52,7 @@ pipeline {
         stage('Trigger Recommendations') {
             steps {
                 script {
-                    def apiUrl = "http://${env.IP_ADDRESS}:${env.PORT}${config['ENDPOINT']}"
+                    def apiUrl = "http://${ipaddress[params.API_TYPE]}:${port[params.API_TYPE]}${endpoint[params.API_TYPE]}"
                     echo "Sending request to API URL: ${apiUrl} with style: ${params.STYLE} and vegetarian: ${params.VEGETARIAN}"
 
                     // Send the curl request with selected parameters and format the result with jq
