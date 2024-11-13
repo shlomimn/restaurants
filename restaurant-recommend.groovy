@@ -5,11 +5,11 @@ pipeline {
         string(name: 'IP_ADDRESS', defaultValue: '192.168.1.221', description: 'Enter the API server IP address')
         choice(name: 'STYLE', choices: ['Italian', 'French', 'Japanese', 'Korean', 'American', 'Asian'], description: 'Choose a style')
         choice(name: 'VEGETARIAN', choices: ['yes', 'no'], description: 'Vegetarian option')
-        choice(name: 'API_TYPE', choices: ['flask', 'azure-function'], description: 'Choose the API type')
+        choice(name: 'API_TYPE', choices: ['azure-function', 'flask'], description: 'Choose the API type')
     }
 
     environment {
-        ENDPOINT = '/recommend'
+        ENDPOINT = params.API_TYPE == 'azure-function' ? '/api/recommend' : '/recommend'
     }
 
     stages {
@@ -22,7 +22,10 @@ pipeline {
                         env.PORT = '7071'
                         env.ENDPOINT = '/api${env.ENDPOINT}'
                     }
-                    echo "Selected IP Address: ${params.IP_ADDRESS}"
+                    script {
+                        env.IP_ADDRESS = params.API_TYPE == 'azure-function' ? 'localhost' : params.IP_ADDRESS
+                        echo "Selected IP Address: ${ipAddress}"
+                    }
                     echo "Selected Style: ${params.STYLE}"
                     echo "Vegetarian Option: ${params.VEGETARIAN}"
                     echo "API Type: ${params.API_TYPE}"
@@ -49,7 +52,7 @@ pipeline {
         stage('Trigger Recommendations') {
             steps {
                 script {
-                    def apiUrl = "http://${params.IP_ADDRESS}:${env.PORT}${env.ENDPOINT}"
+                    def apiUrl = "http://${env.IP_ADDRESS}:${env.PORT}${env.ENDPOINT}"
                     echo "Sending request to API URL: ${apiUrl} with style: ${params.STYLE} and vegetarian: ${params.VEGETARIAN}"
 
                     // Send the curl request with selected parameters and format the result with jq
