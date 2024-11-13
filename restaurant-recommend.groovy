@@ -3,7 +3,7 @@ pipeline {
 
     parameters {
         string(name: 'IP_ADDRESS', defaultValue: '192.168.1.221', description: 'Enter the API server IP address')
-        choice(name: 'API_TYPE', choices: ['flask', 'azure-function'], description: 'Choose the API type', defaultValue: 'azure-function')
+        choice(name: 'API_TYPE', choices: ['flask', 'azure-function'], description: 'Choose the API type')
         choice(name: 'STYLE', choices: ['Italian', 'French', 'Japanese', 'Korean', 'American', 'Asian'], description: 'Choose a style')
         choice(name: 'VEGETARIAN', choices: ['yes', 'no'], description: 'Vegetarian option')
     }
