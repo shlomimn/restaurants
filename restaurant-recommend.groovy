@@ -23,7 +23,7 @@ pipeline {
                         env.ENDPOINT = '/api/recommend'
                     }
                     script {
-                        env.IP_ADDRESS = 'localhost' if params.API_TYPE == 'azure-function' else params.IP_ADDRESS
+                        env.IP_ADDRESS = params.API_TYPE == 'azure-function' ? 'localhost' : params.IP_ADDRESS
                         echo "Selected IP Address: ${env.IP_ADDRESS}"
                     }
                     echo "Selected Style: ${params.STYLE}"
