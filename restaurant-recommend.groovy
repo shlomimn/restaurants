@@ -2,14 +2,14 @@ pipeline {
     agent any
 
     parameters {
+        choice(name: 'API_TYPE', choices: ['azure-function', 'flask'], description: 'Choose the API type')
         string(name: 'IP_ADDRESS', defaultValue: '192.168.1.221', description: 'Enter the API server IP address')
         choice(name: 'STYLE', choices: ['Italian', 'French', 'Japanese', 'Korean', 'American', 'Asian'], description: 'Choose a style')
         choice(name: 'VEGETARIAN', choices: ['yes', 'no'], description: 'Vegetarian option')
-        choice(name: 'API_TYPE', choices: ['azure-function', 'flask'], description: 'Choose the API type')
     }
 
     environment {
-        ENDPOINT = params.API_TYPE == 'azure-function' ? '/api/recommend' : '/recommend'
+        ENDPOINT = '${params.API_TYPE == "azure-function" ? "/api/recommend" : "/recommend"}'
     }
 
     stages {
@@ -20,11 +20,11 @@ pipeline {
                         env.PORT = '5000'
                     } else if (params.API_TYPE == 'azure-function') {
                         env.PORT = '7071'
-                        env.ENDPOINT = '/api${env.ENDPOINT}'
+                        env.ENDPOINT = '/api/recommend'
                     }
                     script {
-                        env.IP_ADDRESS = params.API_TYPE == 'azure-function' ? 'localhost' : params.IP_ADDRESS
-                        echo "Selected IP Address: ${ipAddress}"
+                        env.IP_ADDRESS = 'localhost' if params.API_TYPE == 'azure-function' else params.IP_ADDRESS
+                        echo "Selected IP Address: ${env.IP_ADDRESS}"
                     }
                     echo "Selected Style: ${params.STYLE}"
                     echo "Vegetarian Option: ${params.VEGETARIAN}"
