@@ -3,24 +3,33 @@ pipeline {
 
     parameters {
         string(name: 'IP_ADDRESS', defaultValue: '192.168.1.221', description: 'Enter the API server IP address')
+        choice(name: 'API_TYPE', choices: ['flask', 'azure-function'], description: 'Choose the API type', defaultValue: 'azure-function')
         choice(name: 'STYLE', choices: ['Italian', 'French', 'Japanese', 'Korean', 'American', 'Asian'], description: 'Choose a style')
         choice(name: 'VEGETARIAN', choices: ['yes', 'no'], description: 'Vegetarian option')
     }
 
     environment {
-        PORT = '5000'
         ENDPOINT = '/recommend'
     }
 
     stages {
         stage('Load Parameters') {
             steps {
-                echo "Selected IP Address: ${params.IP_ADDRESS}"
-                echo "Selected Style: ${params.STYLE}"
-                echo "Vegetarian Option: ${params.VEGETARIAN}"
+                script {
+                    if (params.API_TYPE == 'flask') {
+                        env.PORT = '5000'
+                    } else if (params.API_TYPE == 'azure-function') {
+                        env.PORT = '7071'
+                    }
+                    echo "Selected IP Address: ${params.IP_ADDRESS}"
+                    echo "Selected Style: ${params.STYLE}"
+                    echo "Vegetarian Option: ${params.VEGETARIAN}"
+                    echo "API Type: ${params.API_TYPE}"
+                    echo "Using Port: ${env.PORT}"
+                }
             }
         }
-        
+
         stage('Download jq if needed') {
             steps {
                 script {
@@ -46,7 +55,7 @@ pipeline {
                     sh """
                         curl -X GET "${apiUrl}" \
                              -H "Content-Type: application/json" \
-                             -d '{\"style\": \"${params.STYLE}\", \"vegetarian\": \"${params.VEGETARIAN}\"}' | ./jq '.[]'
+                             -d '{"style": "${params.STYLE}", "vegetarian": "${params.VEGETARIAN}"}' | ./jq '.[]'
                     """
                 }
             }
