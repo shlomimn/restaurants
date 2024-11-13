@@ -9,8 +9,10 @@ pipeline {
     }
 
     environment {
-        ENDPOINT = '/recommend'
     }
+
+    def config = [:]
+    config['ENDPOINT'] = '/recommend'
 
     stages {
         stage('Load Parameters') {
@@ -20,7 +22,7 @@ pipeline {
                         env.PORT = '5000'
                     } else if (params.API_TYPE == 'azure-function') {
                         env.PORT = '7071'
-                        env.ENDPOINT = '/api/recommend'
+                        config['ENDPOINT'] = '/api/recommend'
                     }
                     script {
                         env.IP_ADDRESS = params.API_TYPE == 'azure-function' ? 'localhost' : params.IP_ADDRESS
@@ -52,7 +54,7 @@ pipeline {
         stage('Trigger Recommendations') {
             steps {
                 script {
-                    def apiUrl = "http://${env.IP_ADDRESS}:${env.PORT}${env.ENDPOINT}"
+                    def apiUrl = "http://${env.IP_ADDRESS}:${env.PORT}${config['ENDPOINT']}"
                     echo "Sending request to API URL: ${apiUrl} with style: ${params.STYLE} and vegetarian: ${params.VEGETARIAN}"
 
                     // Send the curl request with selected parameters and format the result with jq
