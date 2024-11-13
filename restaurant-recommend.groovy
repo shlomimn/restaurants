@@ -9,7 +9,7 @@ pipeline {
     }
 
     environment {
-        ENDPOINT = '${params.API_TYPE == "azure-function" ? "/api/recommend" : "/recommend"}'
+        ENDPOINT = '/recommend'
     }
 
     stages {
