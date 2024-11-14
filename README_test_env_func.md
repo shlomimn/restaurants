@@ -7,6 +7,9 @@ MySQL on docker for testing   - like in README_test_env_flask.
 Jenkins on Docker for testing - like in README_test_env_flask.
 
 # cli local function config
+Develop Azure Functions locally using Core Tools:  
+https://learn.microsoft.com/en-us/azure/azure-functions/functions-run-local?tabs=macos%2Cisolated-process%2Cnode-v4%2Cpython-v2%2Chttp-trigger%2Ccontainer-apps&pivots=programming-language-python  
+
 func init azure-func --worker-runtime python --model V2  
 cd azure-func  
 func new --template "Http Trigger" --name routeName
