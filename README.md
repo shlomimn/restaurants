@@ -39,8 +39,6 @@ This project automates restaurant management using Jenkins and Azure services. I
 - **Functionality**: Sets up Azure resources.
 - **Actions**:
   - Provisions an Azure Function App.
-![image](https://github.com/user-attachments/assets/31fc7aa5-8abb-421f-8017-adb64aba9cd6)
-
   ![image](https://github.com/user-attachments/assets/ae4ecbce-c634-4492-b681-a000b6e52063)
 
   - Creates an Azure SQL Server and the `restaurant_info` table.
