@@ -35,7 +35,9 @@ This project automates restaurant management using Jenkins and Azure services. I
 ## Jenkins Job Descriptions
 
 Prior to running (1,2) Jenkins jobs below,  
+```
 Create **azure-function-url** and **azure-function-host-key** credentials in Jenkins.  
+```
 These credentials are taken from:  
 < function app > --> < function > --> Get Function URL --> _master (Host key)  
 
