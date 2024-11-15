@@ -39,9 +39,10 @@ This project automates restaurant management using Jenkins and Azure services. I
 - **Functionality**: Sets up Azure resources.
 - **Actions**:
   - Provisions an Azure Function App.
+  ![image](https://github.com/user-attachments/assets/48cd03d6-6285-40f0-a32c-8f1985966a53)
   - Creates an Azure SQL Server and the `restaurant_info` table.
-![image](https://github.com/user-attachments/assets/48cd03d6-6285-40f0-a32c-8f1985966a53)
-<img width="844" alt="image" src="https://github.com/user-attachments/assets/0d9fb113-f3b6-4fb2-8577-d4f219821dbe">
+  <img width="844" alt="image" src="https://github.com/user-attachments/assets/0d9fb113-f3b6-4fb2-8577-d4f219821dbe">
+
 
 
 ### Run Terraform Build Job
@@ -141,9 +142,9 @@ Jenkins jobs (1,2) will need to use these credentials to reach and access the fu
   - **ADD**: Adds a new restaurant with details: name, style, open_hour, close_hour, address, and vegetarian status.
   - **UPDATE**: Updates the `open_hour` and `close_hour` of an existing restaurant.
   - **DELETE**: Deletes a restaurant from the database.
-
+  ![img.png](img.png)
 ---
-![image](https://github.com/user-attachments/assets/82299160-d5dc-4119-ac85-3f57009a704b)
+
 
 
 
