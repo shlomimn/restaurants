@@ -32,59 +32,14 @@ This project automates restaurant management using Jenkins and Azure services. I
 +-------------------------------+
 ```
 
-## Jenkins Job Descriptions
+## Setting Up the Environment
 
-Prior to running (1,2) Jenkins jobs below,  
-```
-Create **azure-function-url** and **azure-function-host-key** credentials in Jenkins.  
-```
-These credentials are taken from Azure portal:  
-< function app > --> < function > --> Get Function URL --> _master (Host key)  
-
-```
-Example:  
-
-_master (Host key) =  http://func-restaurant.azurewebsites.net/api/function-rest/\?code\=< key >   
-azure-function-url = https://func-restaurant.azurewebsites.net/api/function-rest   
-azure-function-host-key = < key >
-```
-Jenkins jobs (1,2) will look for these credentials:
-```
-    environment {
-        FUNCTION_URL = credentials('azure-function-url')
-        HOST_KEY = credentials('azure-function-host-key')
-    }
-```
-
-### 1. `restaurant-recommend.groovy`
-- **Functionality**: Retrieves restaurant recommendations.
-- **Inputs**:
-  - **Restaurant Style**: Dropdown menu for styles like Italian, Chinese, etc.
-  - **Vegetarian Option**: Yes/No.
-- **Workflow**:
-  - Sends HTTP requests to the Azure Function App.
-  - Function App queries the SQL database (`restaurant_info` table).
-  - Retrieves restaurants currently open (`open_hour` and `close_hour`).
-
----
-
-### 2. `restaurant-sql-table.groovy`
-- **Functionality**: Manages the `restaurant_info` table.
-- **Options**:
-  - **ADD**: Adds a new restaurant with details: name, style, open_hour, close_hour, address, and vegetarian status.
-  - **UPDATE**: Updates the `open_hour` and `close_hour` of an existing restaurant.
-  - **DELETE**: Deletes a restaurant from the database.
-
----
-
-### 3. `restaurant-terraform-build.groovy`
+## IaC Jenkins Job Description
+### `restaurant-terraform-build.groovy`
 - **Functionality**: Sets up Azure resources.
 - **Actions**:
   - Provisions an Azure Function App.
   - Creates an Azure SQL Server and the `restaurant_info` table.
-
-
-## Setting Up the Environment
 
 ### Run Terraform Build Job
 - Execute the **`restaurant-terraform-build.groovy`** Jenkins job to create the Azure Function App and SQL Server.
@@ -133,3 +88,53 @@ To monitor and validate the Azure Function App, follow these steps:
 2. **Check Live Metrics**:
    - In the Azure Portal, access the **Live Metrics** tab under **Monitor**.
    - Review performance metrics, such as execution times, throughput, and error rates.
+
+
+## Application Jenkins Jobs Descriptions
+
+Prior to running (1,2) Jenkins jobs below,  
+```
+Create **azure-function-url** and **azure-function-host-key** credentials in Jenkins.  
+```
+These credentials are taken from Azure portal:  
+< function app > --> < function > --> Get Function URL --> _master (Host key)  
+
+```
+Example:  
+
+_master (Host key) =  http://func-restaurant.azurewebsites.net/api/function-rest/\?code\=< key >   
+azure-function-url = https://func-restaurant.azurewebsites.net/api/function-rest   
+azure-function-host-key = < key >
+```
+Jenkins jobs (1,2) will need to use these credentials to reach and access the function app:
+```
+    environment {
+        FUNCTION_URL = credentials('azure-function-url')
+        HOST_KEY = credentials('azure-function-host-key')
+    }
+```
+
+### 1. `restaurant-recommend.groovy`
+- **Functionality**: Retrieves restaurant recommendations.
+- **Inputs**:
+  - **Restaurant Style**: Dropdown menu for styles like Italian, Chinese, etc.
+  - **Vegetarian Option**: Yes/No.
+- **Workflow**:
+  - Sends HTTP requests to the Azure Function App.
+  - Function App queries the SQL database (`restaurant_info` table).
+  - Retrieves restaurants currently open (`open_hour` and `close_hour`).
+
+---
+
+### 2. `restaurant-sql-table.groovy`
+- **Functionality**: Manages the `restaurant_info` table.
+- **Options**:
+  - **ADD**: Adds a new restaurant with details: name, style, open_hour, close_hour, address, and vegetarian status.
+  - **UPDATE**: Updates the `open_hour` and `close_hour` of an existing restaurant.
+  - **DELETE**: Deletes a restaurant from the database.
+
+---
+
+
+
+    
