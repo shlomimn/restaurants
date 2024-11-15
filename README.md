@@ -57,6 +57,8 @@ To deploy the Azure Function App, follow these steps:
    ```bash
    git clone <repository-url>
    cd <repository-name>
+   ![image](https://github.com/user-attachments/assets/2d5091a8-1dd3-44f2-8e98-61cca7d5173c)
+
 2. Navigate to the `azure-function/function-rest` directory in your local repository.
 3. From terraform outputs copy the **FQDN** of the Azure SQL Server and export it as environment variables:
    ```bash
