@@ -34,6 +34,26 @@ This project automates restaurant management using Jenkins and Azure services. I
 
 ## Jenkins Job Descriptions
 
+Prior to running (1,2) Jenkins jobs below,  
+Create **azure-function-url** and **azure-function-host-key** credentials in Jenkins.  
+These credentials are taken from:  
+< function app > --> < function > --> Get Function URL --> _master (Host key)  
+
+```
+Example:  
+
+_master (Host key) =  http://func-restaurant.azurewebsites.net/api/function-rest/\?code\=< key >   
+azure-function-url = https://func-restaurant.azurewebsites.net/api/function-rest   
+azure-function-host-key = < key >
+```
+Jenkins jobs (1,2) will look for these credentials:
+```
+    environment {
+        FUNCTION_URL = credentials('azure-function-url')
+        HOST_KEY = credentials('azure-function-host-key')
+    }
+```
+
 ### 1. `restaurant-recommend.groovy`
 - **Functionality**: Retrieves restaurant recommendations.
 - **Inputs**:
@@ -64,15 +84,9 @@ This project automates restaurant management using Jenkins and Azure services. I
 
 ## Setting Up the Environment
 
-### Step 1: Run Terraform Build Job
+### Run Terraform Build Job
 - Execute the **`restaurant-terraform-build.groovy`** Jenkins job to create the Azure Function App and SQL Server.
 
-### Step 2: Export Environment Variables
-- From terraform outputs copy the **FQDN** of the Azure SQL Server and export it as environment variables:
-  ```bash
-  export DB_HOST=<SQL_SERVER_FQDN>
-  export DB_USER=<SQL_SERVER_USERNAME>
-  export DB_PASSWORD=<SQL_SERVER_PASSWORD>
 
 ## Deploy the Function App
 
@@ -83,10 +97,28 @@ To deploy the Azure Function App, follow these steps:
    git clone <repository-url>
    cd <repository-name>
 2. Navigate to the `azure-function/function-rest` directory in your local repository.
-3. Use the Azure CLI to deploy the Function App:
+3. From terraform outputs copy the **FQDN** of the Azure SQL Server and export it as environment variables:
+   ```bash
+      export DB_HOST=<SQL_SERVER_FQDN>
+      export DB_USER=<SQL_SERVER_USERNAME>
+      export DB_PASSWORD=<SQL_SERVER_PASSWORD>
+   ```   
+
+4. Function app python file will get the environment parameters above with:
+   ```
+        db_config = {
+            'user': os.getenv('DB_USER'),
+            'password': os.getenv('DB_PASSWORD'),
+            'host': os.getenv('DB_HOST'),
+            'database': 'restaurants',
+            'port': 3306
+        }
+   ```
+
+5. Use the Azure CLI to deploy the Function App:
    ```bash
    func azure functionapp publish func-restaurant
-
+   ```
 
 ## Monitor the Function App
 
