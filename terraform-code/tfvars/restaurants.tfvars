@@ -10,7 +10,19 @@
 location = "West Europe"
 
 # mysql_server
-mysql_server_name = "mysql-restaurant-flexible-server"
+mysql_server_name = "mysql-restaurants-flexible-server"
 
 # mysql_database
 mysql_database_name = "restaurants"
+
+# log_analytics
+log_analytics_name = "log-analytics-func-restaurants"
+
+# application_insights
+application_insights_name = "app-insights-restaurants"
+
+# app_service_plan
+azurerm_service_plan_name = "azure-functions-restaurants-srvplan"
+
+# function_app
+azurerm_function_app_name = "function-app-restaurants"

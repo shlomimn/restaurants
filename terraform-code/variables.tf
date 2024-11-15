@@ -31,18 +31,26 @@ variable "mysql_database_name" {
   type = string
 }
 
+# log_analytics
+variable "log_analytics_name" {
+  type = string
+}
+
+# application_insights
+variable "application_insights_name" {
+  type = string
+}
+
+# app_service_plan
+variable "azurerm_service_plan_name" {
+  type = string
+}
+
 # function_app
 variable "storage_account_name" {
   type    = string
-  default = "funcapprestaurant2"
+  default = "funcapprestaurant"
 }
-variable "azurerm_app_service_plan_sku" {
-  type = object({
-    tier = string
-    size = string
-  })
-  default = {
-    tier = "Dynamic"
-    size = "Y1"
-  }
+variable "azurerm_function_app_name" {
+  type = string
 }

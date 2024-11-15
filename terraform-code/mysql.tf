@@ -16,7 +16,7 @@ locals {
 resource "azurerm_mysql_flexible_server" "this" {
   name                   = var.mysql_server_name
   resource_group_name    = azurerm_resource_group.this.name
-  location               = var.location
+  location               = azurerm_resource_group.this.location
   administrator_login    = var.mysql_login
   administrator_password = local.mysql_pw
   sku_name               = var.mysql_sku_name
