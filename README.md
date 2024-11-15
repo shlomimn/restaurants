@@ -1,4 +1,4 @@
-# Restaurant Management System with Jenkins and Azure
+# Which restaurant is opened with Jenkins and Azure
 
 This project automates restaurant management using Jenkins and Azure services. It includes three key Jenkins jobs: 
 

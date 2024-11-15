@@ -25,7 +25,7 @@ local.settings.json
 node_modules
 dist
 
-# Local python-manual-tests packages
+# Local python packages
 .python_packages/
 
 # Python Environments

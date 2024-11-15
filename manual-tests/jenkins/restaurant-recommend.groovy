@@ -2,23 +2,28 @@ pipeline {
     agent any
 
     parameters {
-        string(name: 'STYLE', choices: ['Italian', 'French', 'Japanese', 'Korean', 'American', 'Asian'], description: 'Choose a style')
+        string(name: 'IP_ADDRESS', defaultValue: '192.168.1.221', description: 'Enter the API server IP address')
+        choice(name: 'API_TYPE', choices: ['azure-function', 'flask', ], description: 'Choose the API type')
+        choice(name: 'STYLE', choices: ['Italian', 'French', 'Japanese', 'Korean', 'American', 'Asian'], description: 'Choose a style')
         choice(name: 'VEGETARIAN', choices: ['yes', 'no'], description: 'Vegetarian option')
-    }
-
-    environment {
-        // Set the Azure Function URL and use Jenkins credentials for the host key
-        FUNCTION_URL = credentials('azure-function-url') // Replace 'azure-function-url' with your Jenkins credential ID
-        HOST_KEY = credentials('azure-function-host-key') // Replace 'azure-function-host-key' with your Jenkins credential ID
     }
 
     stages {
         stage('Load Parameters') {
             steps {
                 script {
+                    if (params.API_TYPE == 'flask') {
+                        env.PORT = '5000'
+                        env.ENDPOINT = '/recommend'
+                    } else if (params.API_TYPE == 'azure-function') {
+                        env.PORT = '7071'
+                        env.ENDPOINT = '/api/recommend'
+                    }
+                    echo "Selected IP Address: ${params.IP_ADDRESS}"
                     echo "Selected Style: ${params.STYLE}"
                     echo "Vegetarian Option: ${params.VEGETARIAN}"
-                    echo "Using Azure Function URL: ${env.FUNCTION_URL}"
+                    echo "API Type: ${params.API_TYPE}"
+                    echo "Using Port: ${env.PORT}"
                 }
             }
         }
@@ -41,13 +46,13 @@ pipeline {
         stage('Trigger Recommendations') {
             steps {
                 script {
-                    echo "Sending request to Azure Function URL: ${env.FUNCTION_URL} with style: ${params.STYLE} and vegetarian: ${params.VEGETARIAN}"
+                    def apiUrl = "http://${params.IP_ADDRESS}:${env.PORT}${env.ENDPOINT}"
+                    echo "Sending request to API URL: ${apiUrl} with style: ${params.STYLE} and vegetarian: ${params.VEGETARIAN}"
 
-                    // Send the curl request with selected parameters, including the host key
+                    // Send the curl request with selected parameters and format the result with jq
                     sh """
-                        curl -X GET "${env.FUNCTION_URL}" \
+                        curl -X GET "${apiUrl}" \
                              -H "Content-Type: application/json" \
-                             -H "x-functions-key: ${env.HOST_KEY}" \
                              -d '{"style": "${params.STYLE}", "vegetarian": "${params.VEGETARIAN}"}' | ./jq '.[]'
                     """
                 }
