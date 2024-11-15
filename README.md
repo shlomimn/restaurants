@@ -40,6 +40,9 @@ This project automates restaurant management using Jenkins and Azure services. I
 - **Actions**:
   - Provisions an Azure Function App.
   - Creates an Azure SQL Server and the `restaurant_info` table.
+![image](https://github.com/user-attachments/assets/48cd03d6-6285-40f0-a32c-8f1985966a53)
+<img width="844" alt="image" src="https://github.com/user-attachments/assets/0d9fb113-f3b6-4fb2-8577-d4f219821dbe">
+
 
 ### Run Terraform Build Job
 - Execute the **`restaurant-terraform-build.groovy`** Jenkins job to create the Azure Function App and SQL Server.
@@ -100,6 +103,8 @@ Create **azure-function-url** and **azure-function-host-key** credentials in Jen
 ```
 These credentials are taken from Azure portal:  
 < function app > --> < function > --> Get Function URL --> _master (Host key)  
+![image](https://github.com/user-attachments/assets/223ff77e-21dc-4531-8c9d-ca561509217e)
+
 
 ```
 Example:  
@@ -125,6 +130,8 @@ Jenkins jobs (1,2) will need to use these credentials to reach and access the fu
   - Sends HTTP requests to the Azure Function App.
   - Function App queries the SQL database (`restaurant_info` table).
   - Retrieves restaurants currently open (`open_hour` and `close_hour`).
+![image](https://github.com/user-attachments/assets/bda86bc8-4de1-4538-b442-3761d150f84b)
+
 
 ---
 
@@ -136,6 +143,7 @@ Jenkins jobs (1,2) will need to use these credentials to reach and access the fu
   - **DELETE**: Deletes a restaurant from the database.
 
 ---
+![image](https://github.com/user-attachments/assets/82299160-d5dc-4119-ac85-3f57009a704b)
 
 
 
