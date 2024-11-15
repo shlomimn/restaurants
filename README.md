@@ -89,6 +89,8 @@ To monitor and validate the Azure Function App, follow these steps:
    - In the Azure Portal, access the **Live Metrics** tab under **Monitor**.
    - Review performance metrics, such as execution times, throughput, and error rates.
 
+![image](https://github.com/user-attachments/assets/5787ca47-09b0-4548-98b6-3ab0ff6647c0)
+
 
 ## Application Jenkins Jobs Descriptions
 
