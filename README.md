@@ -142,7 +142,8 @@ Jenkins jobs (1,2) will need to use these credentials to reach and access the fu
   - **ADD**: Adds a new restaurant with details: name, style, open_hour, close_hour, address, and vegetarian status.
   - **UPDATE**: Updates the `open_hour` and `close_hour` of an existing restaurant.
   - **DELETE**: Deletes a restaurant from the database.
-  ![img.png](img.png)
+  ![image](https://github.com/user-attachments/assets/a8d7f7a2-be44-46a7-a2f7-7dc2e38b45a8)
+
 ---
 
 
