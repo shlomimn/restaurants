@@ -38,7 +38,7 @@ Prior to running (1,2) Jenkins jobs below,
 ```
 Create **azure-function-url** and **azure-function-host-key** credentials in Jenkins.  
 ```
-These credentials are taken from:  
+These credentials are taken from Azure portal:  
 < function app > --> < function > --> Get Function URL --> _master (Host key)  
 
 ```
