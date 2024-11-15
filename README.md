@@ -9,23 +9,23 @@ This project automates restaurant management using Jenkins and Azure services. I
 ## Architecture Diagram
 
 ```plaintext
-+---------------------------+
-|      Jenkins Server       |
-+---------------------------+
-        |           |
-        v           v
-+-----------------+ +-------------------+
-| `restaurant-    | | `restaurant-sql-  |
++-----------------------------+
+|        Jenkins Server       |
++-----------------------------+
+        |               |
+        v               v
++------------------+ +-------------------+
+| `restaurant-     | | `restaurant-sql-  |
 | recommend.groovy`| | table.groovy`     |
-+-----------------+ +-------------------+
-        |                       |
-        v                       v
-+---------------------------+   |
-| Azure Function App        |   |
-| `func-restaurant`         |   |
-+---------------------------+   |
-        |                       |
-        v                       v
++----------------=-+ +-------------------+
+        |                |
+        v                v
++---------------------------+   
+| Azure Function App        |   
+| `func-restaurant`         |   
++---------------------------+   
+        |                       
+        v                       
 +-------------------------------+
 | Azure SQL Server             |
 | `restaurant_info` table      |
