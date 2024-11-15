@@ -4,13 +4,14 @@ from datetime import datetime, timedelta
 import logging
 import pymysql
 import json
+import os
 
 
 # Database configuration - update with your MySQL database credentials
 db_config = {
-    'user': 'root',
-    'password': 'admin',
-    'host': '192.168.1.221',
+    'user': os.getenv('DB_USER'),
+    'password': os.getenv('DB_PASSWORD'),
+    'host': os.getenv('DB_HOST'),
     'database': 'restaurants',
     'port': 3306
 }
@@ -114,12 +115,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         address = data.get('address')
 
         try:
-            connection = pymysql.connect(
-                host='192.1.1.1',
-                user='root',
-                password='admin',
-                database='restaurants'
-            )
+            connection = pymysql.connect(**db_config, cursorclass=pymysql.cursors.DictCursor)
             with connection.cursor() as cursor:
                 query = """INSERT INTO restaurants_info (name, style, vegetarian, open_hour, close_hour, address) 
                                VALUES (%s, %s, %s, %s, %s, %s)"""
@@ -146,12 +142,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         close_hour = data.get('close_hour')
 
         try:
-            connection = pymysql.connect(
-                host='192.2.2.2',
-                user='root',
-                password='admin',
-                database='restaurants'
-            )
+            connection = pymysql.connect(**db_config, cursorclass=pymysql.cursors.DictCursor)
             with connection.cursor() as cursor:
                 query = """UPDATE restaurants_info 
                                SET open_hour = %s, close_hour = %s 
@@ -177,12 +168,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         name = data.get('name')
 
         try:
-            connection = pymysql.connect(
-                host='192.3.3.3',
-                user='root',
-                password='admin',
-                database='restaurants'
-            )
+            connection = pymysql.connect(**db_config, cursorclass=pymysql.cursors.DictCursor)
             with connection.cursor() as cursor:
                 query = """DELETE FROM restaurants_info WHERE name = %s"""
                 cursor.execute(query, (name,))
